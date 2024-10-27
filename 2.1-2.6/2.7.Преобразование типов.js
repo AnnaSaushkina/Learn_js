@@ -17,10 +17,11 @@ console.log(stringToNumber("строка")) // NaN
 // Создайте функцию numberToString, которая принимает число и возвращает его строковое представление.
 
 function numberToString(num) {
-        if (num !== Number(num)) {
-            return "Введите число";
-        }
-    else return  String(num);
+    if (num !== Number(num)) {
+        return "Введите число";
+    }
+    else 
+    return  String(num);
 }
 console.log(numberToString(2)) // "2"
 console.log(numberToString("строка")) // "Введите число"
@@ -63,7 +64,6 @@ function stringToBoolean(str) {
 
 console.log(stringToBoolean(false)) // 1.boolean false
 console.log(stringToBoolean(true)) // 1.boolean true
-
 console.log(stringToBoolean("false")) // 3. основной ответ: boolean false
 console.log(stringToBoolean("true")) // 2. основной ответ: boolean true
 console.log(stringToBoolean(1)) // 4. иной ответ: number Введите true или false
