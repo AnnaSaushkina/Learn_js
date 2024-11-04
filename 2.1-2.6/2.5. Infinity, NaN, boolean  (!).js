@@ -4,7 +4,11 @@
 
 function isInfinite(value) {
     // Ваш код здесь
+    
 }
+console.log(isInfinite(10))
+console.log(isInfinite(Infinity))
+console.log(isInfinite(-Infinity))
 
 
 // ### Задача 2: NaN
@@ -24,17 +28,6 @@ function isNotANumber(value) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 function isFalsy(value) {
     // Ваш код здесь
 }
@@ -47,3 +40,5 @@ function isFalsy(value) {
 function checkValue(value) {
     // Ваш код здесь
 }
+
+// * [ ] задачи по самим типам. 2.5
