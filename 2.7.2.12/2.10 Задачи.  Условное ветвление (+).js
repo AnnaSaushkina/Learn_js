@@ -107,7 +107,13 @@ console.log(isEven(7)); // false
 // • 0-59: "F"
 
 function getGrade(score) {
-    
+  let result;
+  (score >= 90 && score <= 100) ? result = "A" :
+  (score >= 80 && score <= 89) ? result = "B" : 
+  (score >= 70 && score <= 79) ? result = "C" : 
+  (score >= 60 && score <= 69) ? result = "D" : 
+  (score >= 0 && score <= 59) ? result = "F" : result = "";
+  return result;
 }
 
 // Примеры вызова функции
@@ -123,7 +129,10 @@ console.log(getGrade(50)); // "F"
 // Напишите функцию getDayType, которая принимает номер дня недели (от 1 до 7) и возвращает строку "Рабочий день" для понедельника-пятницы и "Выходной" для субботы и воскресенья.
 
 function getDayType(day) {
-    // Ваш код здесь
+  let whichDay
+  (day >= 6 && day < 7) ? whichDay = "Выходноой" :
+  (day <= 5 && day > 0) ? whichDay = "Рабочий день" : whichDay = "";
+  return whichDay
 }
 
 // Примеры вызова функции
@@ -140,9 +149,11 @@ console.log(getDayType(6)); // "Выходной"
 // • "Доступ запрещен", если возраст меньше 18.
 
 function checkAge(age) {
-    // Ваш код здесь
+  let access;
+  (age >= 18)? access = "Доступ разрешен" : 
+  access = "Доступ запрещен";
+  return access
 }
-
 // Примеры вызова функции
 console.log(checkAge(20)); // "Доступ разрешен"
 console.log(checkAge(16)); // "Доступ запрещен"
@@ -159,7 +170,11 @@ console.log(checkAge(16)); // "Доступ запрещен"
 // • "Числа равны".
 
 function compareNumbers(num1, num2) {
-    // Ваш код здесь
+  let result
+  (num1 > num2) ? result = "Первое число больше" :
+  (num2 > num1) ? result = "Второе число больше" :
+  result = "Числа равны"
+  return result
 }
 
 // Примеры вызова функции
@@ -173,7 +188,7 @@ console.log(compareNumbers(10, 10)); // "Числа равны"
 // Создайте функцию isInRange, которая принимает число и проверяет, находится ли оно в диапазоне от 10 до 20 (включительно). Возвращайте true или false.
 
 function isInRange(num) {
-    // Ваш код здесь
+  return result = (num >= 10 && num <= 20) ? true : false; 
 }
 
 // Примеры вызова функции
@@ -194,7 +209,13 @@ console.log(isInRange(25)); // false
 // • Осень: сентябрь (9), октябрь (10), ноябрь (11)
 
 function getSeason(month) {
-    // Ваш код здесь
+  let result;
+      (month == 12 || month <= 2 && month > 0 ) ? result = "Зима" :
+      (month >= 3 && month <= 5) ? result = "Весна" :
+      (month >= 6 && month <= 8) ? result = "Лето" :
+      (month >= 9 && month <= 11) ? result = "Осень" :
+      result = "В году всего 12 месяцев"
+  return result;
 }
 
 // Примеры вызова функции
@@ -209,7 +230,7 @@ console.log(getSeason(10)); // "Осень"
 // Создайте функцию isLeapYear, которая принимает год и возвращает true, если год является високосным, и false в противном случае. Високосный год — это год, который делится на 4, но не делится на 100, или делится на 400.
 
 function isLeapYear(year) {
-    // Ваш код здесь
+  return (year % 4 == 0 && year % 100 !== 0 || year % 400 == 0);
 }
 
 // Примеры вызова функции

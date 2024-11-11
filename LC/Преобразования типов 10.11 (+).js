@@ -111,74 +111,74 @@ console.log(`null === 0: ${null === 0}`) // false
 console.log(`undefined > null: ${undefined > null}`) // false
 const doNothing = () => {}
 console.log(doNothing()) //
-console.log(`undefined >= 0: ${undefined >= 0}`) //
-console.log(`null + null: ${null + null}`) //
-console.log(`NaN == NaN: ${NaN == NaN}`); //
-console.log(`undefined === 0: ${undefined === 0}`) //
-console.log(`null - null: ${null - null}`) //
+console.log(`undefined >= 0: ${undefined >= 0}`) // false
+console.log(`null + null: ${null + null}`) // 0
+console.log(`NaN == NaN: ${NaN == NaN}`); // false
+console.log(`undefined === 0: ${undefined === 0}`) // false
+console.log(`null - null: ${null - null}`) // 0
 const object = {}
-console.log(object.name) //
-console.log(`undefined == 0: ${undefined == 0}`) //
-console.log(`undefined < null: ${undefined < null}`) //
-console.log(`typeof Math.sin(): ${typeof Math.sin()}`); //
-console.log(`undefined + 1: ${undefined + 1}`) //
-console.log(`typeof 3.14: ${typeof 3.14}`); //
-console.log(`undefined => 0: ${undefined <= 0}`) //
-console.log(`null == 0: ${null == 0}`) //
-console.log(`undefined <= null: ${undefined <= null}`) //
+console.log(object.name) // undefined
+console.log(`undefined == 0: ${undefined == 0}`) // false
+console.log(`undefined < null: ${undefined < null}`) // false
+console.log(`typeof Math.sin(): ${typeof Math.sin()}`); // number
+console.log(`undefined + 1: ${undefined + 1}`) // NaN
+console.log(`typeof 3.14: ${typeof 3.14}`); //  number
+console.log(`undefined => 0: ${undefined <= 0}`) // false
+console.log(`null == 0: ${null == 0}`) // false
+console.log(`undefined <= null: ${undefined <= null}`) // false
 function sum(a, b) {
   return a + b
 }
-console.log(`sum(1): ${sum(1)}`) //
-console.log(`typeof function() {}: ${typeof function () {}}`); //
-console.log(`null/null: ${null / null}`) //
-console.log(`typeof "": ${typeof ""}`); //
-console.log(`null > 0: ${null > 0}`) //
-console.log(`typeof new Number(3): ${typeof new Number(3)}`); // 
+console.log(`sum(1): ${sum(1)}`) // NaN
+console.log(`typeof function() {}: ${typeof function () {}}`); // function
+console.log(`null/null: ${null / null}`) // NaN 
+console.log(`typeof "": ${typeof ""}`); // string
+console.log(`null > 0: ${null > 0}`) // false
+console.log(`typeof new Number(3): ${typeof new Number(3)}`); // object 
 console.log(
   `typeof new Promise():
   ${typeof new Promise((resolve, reject) => {})}
-`); //
-console.log(`typeof 1: ${typeof typeof 1}`); //
-console.log(`String(new Map()): ${String(new Map())}`); // 
-console.log(`typeof null: ${typeof null}`); //
-console.log(`1 + "2" + 3: ${typeof 1 + "2" + "3"}`); // 
-console.log(`typeof false: ${typeof false}`); //
+`); // object
+console.log(`typeof 1: ${typeof typeof 1}`); // string
+console.log(`String(new Map()): ${String(new Map())}`); //  [object Map]
+console.log(`typeof null: ${typeof null}`); // object
+console.log(`1 + "2" + 3: ${typeof 1 + "2" + "3"}`); // number23
+console.log(`typeof false: ${typeof false}`); // boolean
 let obj = {
   set: "name",
   func: () => {},
 };
-console.log(`typeof obj.set: ${typeof obj.set}`); //
-console.log(`typeof obj.func: ${typeof obj.func()}`); //
-console.log(`typeof obj.func: ${typeof obj.func}`); //
-console.log(`[1, 2, 3] + [4, 5, 6]: ${[1, 2, 3] + [4, 5, 6]}`); //
+console.log(`typeof obj.set: ${typeof obj.set}`); // string
+console.log(`typeof obj.func: ${typeof obj.func()}`); // underfined
+console.log(`typeof obj.func: ${typeof obj.func}`); // function
+console.log(`[1, 2, 3] + [4, 5, 6]: ${[1, 2, 3] + [4, 5, 6]}`); // 1,2,34,5,6
 console.log(`"1,2,3" === [1,2,3].join(): ${"1,2,3" === [1,2,3].join()}`);
-console.log(`0.2 + 0.1 === 0.3: ${0.2 + 0.1 === 0.3}`); //
-console.log(`10,2: ${10,2}`); //
-console.log(`+!![]: ${+!![]}`); //
-console.log(`true == "true": ${true == "true"}`); //
-console.log(`typeof class C {}: ${typeof class C {}}`); //
-console.log(`0/0: ${0/0}`); //
-console.log(`-0 === +0: ${-0 === +0}`); //
-console.log(`null < 0: ${null < 0}`) //
-console.log(`Object.is(0, -0): ${Object.is(NaN, NaN)}`); //
-console.log(`null >= 0: ${null >= 0}`) //
-console.log(`!3 + !3: ${!3 + !3}`); // 
-console.log(`[] + []: ${[] + []}`); // 
-console.log(`1 + 2 + "3": ${1 + 2 + "3"}`); // 
-console.log(`typeof true: ${typeof true}`); //
-console.log(`typeof 37: ${typeof 37}`); //
-console.log(`1 + "2" + "3": ${1 + "2" + "3"}`); // 
-console.log(`typeof NaN: ${typeof NaN}`); // 
-console.log(`Object.is(0, -0): ${Object.is(0, -0)}`); //
-console.log(`undefined + false: ${undefined + false}`); // 
-console.log(`true == ![]: ${true == ![]}`); // 
-console.log(`true == []: ${true == []}`); // 
-console.log(`!!"false" === !!"true": ${!!"false" === !!"true"}`); // 
-console.log(`[0] == 0: ${[0] == 0}`); // 
-console.log(`undefined + undefined: ${undefined + undefined}`) //
-console.log(`Number(null): ${Number(null)}`); // 
-console.log(`String(new Object()): ${String(new Object())}`); // 
-console.log(`new Number(3): ${new Number(3)}`); // 
+console.log(`0.2 + 0.1 === 0.3: ${0.2 + 0.1 === 0.3}`); // false
+console.log(`10,2: ${10,2}`); // 10, 2 :о)
+console.log(`+!![]: ${+!![]}`); // true
+console.log(`true == "true": ${true == "true"}`); // false
+console.log(`typeof class C {}: ${typeof class C {}}`); // function
+console.log(`0/0: ${0/0}`); // NaN
+console.log(`-0 === +0: ${-0 === +0}`); // false
+console.log(`null < 0: ${null < 0}`) // false
+console.log(`Object.is(0, -0): ${Object.is(NaN, NaN)}`); // true
+console.log(`null >= 0: ${null >= 0}`) //true
+console.log(`!3 + !3: ${!3 + !3}`); // false + false = 0
+console.log(`[] + []: ${[] + []}`); // ""
+console.log(`1 + 2 + "3": ${1 + 2 + "3"}`); // 33
+console.log(`typeof true: ${typeof true}`); // boolean
+console.log(`typeof 37: ${typeof 37}`); // number
+console.log(`1 + "2" + "3": ${1 + "2" + "3"}`); //  123
+console.log(`typeof NaN: ${typeof NaN}`); // number 
+console.log(`Object.is(0, -0): ${Object.is(0, -0)}`); // false
+console.log(`undefined + false: ${undefined + false}`); // NaN
+console.log(`true == ![]: ${true == ![]}`); // false
+console.log(`true == []: ${true == []}`); // false
+console.log(`!!"false" === !!"true": ${!!"false" === !!"true"}`); // true
+console.log(`[0] == 0: ${[0] == 0}`); // true 
+console.log(`undefined + undefined: ${undefined + undefined}`) // NaN
+console.log(`Number(null): ${Number(null)}`); // 0
+console.log(`String(new Object()): ${String(new Object())}`); //[object Object] 
+console.log(`new Number(3): ${new Number(3)}`); // {3}
 function test(){ console.log(arguments); };
-test();
+test(); // [Arguments] {}
