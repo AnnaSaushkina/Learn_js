@@ -1,1 +1,1 @@
-alert("Я Javascript 3")
+alert('Я Javascript 3');

@@ -1,0 +1,16 @@
+{
+  "name": "learn_js",
+  "version": "1.0.0",
+  "description": "07.11\r - 2.5. typeof для функции",
+  "main": "Для проверок.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"**/*.js\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}

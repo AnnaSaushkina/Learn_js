@@ -4,11 +4,10 @@
 let i = 3;
 
 while (i) {
-  console.log( i-- );
+  console.log(i--);
 }
 // 3 2 1
 // выводится до 1 потому что 0 = false
-
 
 // Какие значения выведет цикл while?
 // Для каждого цикла запишите, какие значения он выведет. Потом сравните с ответом.
@@ -18,12 +17,12 @@ while (i) {
 // Префиксный вариант ++i:
 
 let i2 = 0;
-while (++i2 < 5) console.log( i );
+while (++i2 < 5) console.log(i);
 // Постфиксный вариант i++
 //1 2 3 4
 
 let i3 = 0;
-while (i3++ < 5) console.log( i );
+while (i3++ < 5) console.log(i);
 //1 2 3 4 5
 
 // Какие значения выведет цикл for?
@@ -32,40 +31,34 @@ while (i3++ < 5) console.log( i );
 // Оба цикла выведут console.log с одинаковыми значениями или нет?
 
 // Постфиксная форма:
-for (let i4 = 0; i4 < 5; i4++) console.log( i4 );
+for (let i4 = 0; i4 < 5; i4++) console.log(i4);
 //  0 1 2 3 4
 
 // Префиксная форма:
-for (let i5 = 0; i5 < 5; ++i5) console.log( i5 );
+for (let i5 = 0; i5 < 5; ++i5) console.log(i5);
 // 0 1 2 3 4
-
 
 // Выведите чётные числа
 // При помощи цикла for выведите чётные числа от 2 до 10.
-for (i= 0; i < 10; i++) {
-    if (!(i % 2)) {
-        console.log(i);
-    }
+for (i = 0; i < 10; i++) {
+  if (!(i % 2)) {
+    console.log(i);
+  }
 }
 
-
 // Замените for на while
-
 // Перепишите код, заменив цикл for на while, без изменения поведения цикла.
 
 for (let i = 0; i < 3; i++) {
-  console.log( `number ${i}!` );
+  console.log(`number ${i}!`);
 }
-
 
 let second = 0;
 while (second < 3) {
-    console.log(`number ${second}!`)
-    ++second
+  console.log(`number ${second}!`);
+  ++second;
 }
 //number 0! number 1! number 2!
-
-
 
 // Повторять цикл, пока ввод неверен
 // Напишите цикл, который предлагает prompt ввести число, большее 100. Если посетитель ввёл другое число – попросить ввести ещё раз, и так далее.
@@ -74,21 +67,18 @@ while (second < 3) {
 
 // Предполагается, что посетитель вводит только числа. Предусматривать обработку нечисловых строк в этой задаче необязательно.
 
-let testNums = [1, 20, 90, 95, 120]
-let userNum = 0
+let testNums = [1, 20, 90, 95, 120];
+let userNum = 0;
 
 while (userNum < testNums.length) {
-    userNum++
-    if ( testNums[userNum] < 100 ) 
-        {
-            console.log(`Вы ввели ${testNums[userNum]}. Введите число больше 100`)
-        } else {
-            console.log(`Нужное число "${testNums[userNum]}"(больше 100) введено`)
-            break
-        }
+  userNum++;
+  if (testNums[userNum] < 100) {
+    console.log(`Вы ввели ${testNums[userNum]}. Введите число больше 100`);
+  } else {
+    console.log(`Нужное число "${testNums[userNum]}"(больше 100) введено`);
+    break;
+  }
 }
-
-
 
 // АКТУАЛЬНАЯ ЗАДАЧА
 // Вывести простые числа
@@ -103,10 +93,17 @@ while (userNum < testNums.length) {
 // Для n = 10 результат должен быть 2,3,5,7.
 
 // P.S. Код также должен легко модифицироваться для любых других интервалов.
+let arrOfNums = 20;
 
+let num = 4;
+let m = 2;
 
-
-
+while (m <= Math.sqrt(num)) {
+  if (num % m === 0) {
+    console.log(`${false} ${num}`);
+  } else console.log(`${true} ${num}`);
+  m++;
+}
 
 // ▎Задачи с циклом while:
 // 1. Напишите программу, которая запрашивает у пользователя числа, пока не будет введено отрицательное число. Найдите сумму всех введенных положительных чисел.
@@ -128,92 +125,93 @@ while (userNum < testNums.length) {
 
 // 8. Создайте программу, которая находит все простые числа от 2 до 100. Используйте continue для оптимизации перебора делителей.
 
-
 // ▎Решения:
 
 // Задача 1
 function sumPositiveNumbers() {
-    let sum = 0;
-    let num;
-    while ((num = Number(prompt("Введите число:"))) >= 0) {
-        sum += num;
-    }
-    return sum;
+  let sum = 0;
+  let num;
+  while ((num = Number(prompt('Введите число:'))) >= 0) {
+    sum += num;
+  }
+  return sum;
 }
 
 // Задача 2
 function findSeven() {
-    let attempts = 0;
-    let num;
-    while ((num = Math.floor(Math.random() * 10) + 1) !== 7) {
-        attempts++;
-    }
-    return attempts + 1;
+  let attempts = 0;
+  let num;
+  while ((num = Math.floor(Math.random() * 10) + 1) !== 7) {
+    attempts++;
+  }
+  return attempts + 1;
 }
 
 // Задача 3
 function guessNumber() {
-    const target = Math.floor(Math.random() * 100) + 1;
-    let guess;
-    do {
-        guess = Number(prompt("Угадайте число от 1 до 100:"));
-        if (guess > target) {
-            alert("Меньше!");
-        } else if (guess < target) {
-            alert("Больше!");
-        }
-    } while (guess !== target);
-    alert("Поздравляем! Вы угадали!");
+  const target = Math.floor(Math.random() * 100) + 1;
+  let guess;
+  do {
+    guess = Number(prompt('Угадайте число от 1 до 100:'));
+    if (guess > target) {
+      alert('Меньше!');
+    } else if (guess < target) {
+      alert('Больше!');
+    }
+  } while (guess !== target);
+  alert('Поздравляем! Вы угадали!');
 }
 
 // Задача 4
 function checkPassword() {
-    const correctPassword = "secret123";
-    let attempts = 3;
-    let userPassword;
-    do {
-        userPassword = console.log(`Введите пароль (осталось попыток: ${attempts})`);
-        attempts--;
-    } while (userPassword !== correctPassword && attempts > 0);
-    return userPassword === correctPassword;
+  const correctPassword = 'secret123';
+  let attempts = 3;
+  let userPassword;
+  do {
+    userPassword = console.log(
+      `Введите пароль (осталось попыток: ${attempts})`,
+    );
+    attempts--;
+  } while (userPassword !== correctPassword && attempts > 0);
+  return userPassword === correctPassword;
 }
 
 // Задача 5
 function skipMultiplesOfThree() {
-    for (let i = 1; i <= 100; i++) {
-        if (i % 3 === 0) continue;
-        console.log(i);
-    }
+  for (let i = 1; i <= 100; i++) {
+    if (i % 3 === 0) continue;
+    console.log(i);
+  }
 }
 
 // Задача 6
 function findFirstDivisibleBy17() {
-    for (let i = 1; i <= 1000; i++) {
-        if (i % 17 === 0) {
-            return i;
-        }
+  for (let i = 1; i <= 1000; i++) {
+    if (i % 17 === 0) {
+      return i;
     }
+  }
 }
 
 // Задача 7
 function findNumbersWithSumEight() {
-    let count = 0;
-    for (let i = 10; i <= 99; i++) {
-        let sum = Math.floor(i/10) + (i % 10);
-        if (sum === 8) {
-            console.log(i);
-            count++;
-            if (count === 5) break;
-        }
+  let count = 0;
+  for (let i = 10; i <= 99; i++) {
+    let sum = Math.floor(i / 10) + (i % 10);
+    if (sum === 8) {
+      console.log(i);
+      count++;
+      if (count === 5) break;
     }
+  }
 }
 
 // Задача 8
 function findPrimeNumbers() {
-    outer: for (let i = 2; i <= 100; i++) {
-        for (let j = 2; j < i; j++) {
-            if (i % j === 0) continue outer;
-        }
-        console.log(i);
+  outer: for (let i = 2; i <= 100; i++) {
+    for (let j = 2; j < i; j++) {
+      if (i % j === 0) continue outer;
     }
+    console.log(i);
+  }
 }

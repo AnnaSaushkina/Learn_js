@@ -2,49 +2,42 @@
 // Напишите программу, которая запрашивает у пользователя его имя с помощью prompt, а затем выводит приветственное сообщение с его именем, используя alert.
 
 function alertName() {
-     let enteredName =  prompt("Введите свое имя")
-      alert(`Привет, ${enteredName} !`)
-  }
-  alertName()
-
+  let enteredName = prompt('Введите свое имя');
+  alert(`Привет, ${enteredName} !`);
+}
+alertName();
 
 // ### Задача 2: Подтверждение действия
 // Создайте функцию deleteAccount, которая вызывает confirm для подтверждения удаления аккаунта. Если пользователь нажимает "ОК", выводите сообщение "Аккаунт удален", если "Отмена" — "Удаление отменено".
 
 function deleteAccount() {
-    let result = confirm("Аккаунт удален?")
-    if (result == false) {
-        return alert("Удаление отменено")
-        }
-    else
-        return alert("Аккаунт удален")
+  let result = confirm('Аккаунт удален?');
+  if (result == false) {
+    return alert('Удаление отменено');
+  } else return alert('Аккаунт удален');
 }
-deleteAccount()
-
+deleteAccount();
 
 // ### Задача 3: Сумма чисел
 // Напишите программу, которая запрашивает у пользователя два числа с помощью prompt, затем вычисляет их сумму и выводит результат с помощью alert.
 
 function sum() {
-    let userNumOne = prompt('Введите число')
-    let userNumTwo = prompt('Введите второе число')
-    let numsSum = Number(userNumOne) + Number(userNumTwo);
-    alert(numsSum)
+  let userNumOne = prompt('Введите число');
+  let userNumTwo = prompt('Введите второе число');
+  let numsSum = Number(userNumOne) + Number(userNumTwo);
+  alert(numsSum);
 }
-sum()
-
+sum();
 
 // ### Задача 4: Угадай число
 // Создайте игру, в которой программа случайным образом выбирает число от 1 до 10. Затем она предлагает пользователю угадать это число с помощью prompt. Если пользователь угадывает число, выводите alert с сообщением о победе. Если нет — предлагайте попробовать снова.
 
-let randomNum = Math.floor(Math.random() * (max - min))
-console.log(randomNum)
+let randomNum = Math.floor(Math.random() * (max - min));
+console.log(randomNum);
 
 // Ваш код здесь
 
-
 // ### Задача 5: Смена фона
 // Напишите программу, которая спрашивает пользователя, хочет ли он изменить цвет фона страницы с помощью confirm. Если пользователь выбрал "Да", используйте JavaScript для изменения цвета фона на случайный цвет.
-
 
 // Ваш код здесь

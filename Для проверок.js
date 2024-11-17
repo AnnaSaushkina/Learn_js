@@ -11,3 +11,14 @@
 // Для n = 10 результат должен быть 2,3,5,7.
 
 // P.S. Код также должен легко модифицироваться для любых других интервалов.
+let arrOfNums = 20;
+
+let num = 4;
+let m = 2;
+
+while (m <= Math.sqrt(num)) {
+  if (num % m === 0) {
+    console.log(`${false} ${num}`);
+  } else console.log(`${true} ${num}`);
+  m++;
+}

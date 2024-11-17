@@ -9,7 +9,7 @@
 // Рассмотрите следующий код и исправьте его, чтобы он работал в строгом режиме:
 
 function myFunction() {
-  "use strict";
+  'use strict';
   undeclaredVariable = 10; // Ошибка: переменная не объявлена
   return undeclaredVariable;
 }
@@ -17,7 +17,7 @@ console.log(myFunction());
 
 //Добавляем let тк иначе создается переменная в глобоальной области видимости которую не распознает строгий режим
 function myFunction() {
-  "use strict";
+  'use strict';
   let undeclaredVariable = 10; // 10
   return undeclaredVariable;
 }
@@ -27,12 +27,12 @@ console.log(myFunction());
 
 // Напишите код, который будет работать в обычном режиме, но вызовет ошибку в строгом режиме. Например, попытка удалить переменную:
 
-("use strict");
+('use strict');
 var x = 10;
 delete x; // Ошибка: В строгом режиме мы не можем удалить переменную.
 console.log(x);
 
-("use strict");
+('use strict');
 var x = 10;
 x = null;
 console.log(x);
@@ -42,9 +42,9 @@ console.log(x);
 
 // Напишите код, который демонстрирует, как "use strict" влияет на свойства объектов. Создайте объект и попытайтесь добавить ему свойство с именем, которое является зарезервированным словом.
 
-("use strict");
+('use strict');
 const obj = {};
-obj.get = "value"; // Ошибка: 'get' является зарезервированным словом
+obj.get = 'value'; // Ошибка: 'get' является зарезервированным словом
 
 console.log(obj);
 
@@ -52,7 +52,7 @@ console.log(obj);
 
 // Объясните, как "use strict" влияет на лексическую область видимости и использование this внутри функций.
 
-("use strict");
+('use strict');
 function showThis() {
   console.log(this); // undefined вместо глобального объекта
 }
@@ -63,7 +63,7 @@ showThis();
 // Создайте простую функцию, которая будет включать строгий режим при помощи директивы use strict. Проверьте, что вы не можете использовать не объявленные переменные (например, x = 10).
 
 function testStrictMode() {
-  "use strict";
+  'use strict';
   x = 10;
 }
 testStrictMode(); // нельзя обращаться к необъявленным переменным
@@ -72,7 +72,7 @@ testStrictMode(); // нельзя обращаться к необъявленн
 // Напишите функцию с двумя параметрами, которые имеют одинаковые имена. Включите строгий режим и убедитесь, что это вызывает ошибку.
 
 function duplicateParameters(a, a) {
-  "use strict";
+  'use strict';
   return a + a;
 }
 duplicateParameters(2, 4); //Вернет ошибку Duplicate parameter name not allowed in this context
@@ -81,7 +81,7 @@ duplicateParameters(2, 4); //Вернет ошибку Duplicate parameter name 
 // Попробуйте присвоить значение несуществующему свойству объекта. Включите строгий режим и проверьте, что это вызывает ошибку.
 
 function assignToNonExistentProperty(x) {
-  "use strict";
+  'use strict';
   x = { p1: 10, p2: 20 };
   return x;
 }
