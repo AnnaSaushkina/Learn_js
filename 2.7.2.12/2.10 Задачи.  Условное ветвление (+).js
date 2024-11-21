@@ -244,3 +244,7 @@ function isLeapYear(year) {
 console.log(isLeapYear(2020)); // true
 console.log(isLeapYear(1900)); // false
 console.log(isLeapYear(2000)); // true
+
+
+
+
