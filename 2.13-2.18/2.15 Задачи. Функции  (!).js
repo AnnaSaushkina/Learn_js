@@ -110,13 +110,16 @@ console.log(factorial(0)); // 1
 среди всех переданных аргументов.
 Использовать оператор rest.
 */
+function findMax(...args) {
+  return Math.max(...args)
+}
 
 // Пример:
 console.log(findMax(1, 5, 2, 9, 3)); // 9
 console.log(findMax(1, 2)); // 2
 console.log(findMax(1)); // 1
 
-// 7. Композиция функций:
+/// 7. Композиция функций:
 /*
 Создайте функции:
 - double (умножает число на 2)
@@ -124,6 +127,9 @@ console.log(findMax(1)); // 1
 - compose (принимает массив функций и возвращает функцию, 
   которая выполняет все функции последовательно)
 */
+function double() {
+    
+}
 
 // Пример:
 const transform = compose([double, addOne, double]);
