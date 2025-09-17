@@ -66,7 +66,6 @@ console.log(operate(5, 3, multiply)); // 15
 console.log(operate(8, 2, subtract)); // 4
 
 
-
 // 4. Замыкания:
 /*
 Создайте функцию createCounter, которая создает счетчик.

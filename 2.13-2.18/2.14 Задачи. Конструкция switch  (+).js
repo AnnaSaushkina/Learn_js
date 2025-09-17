@@ -184,7 +184,6 @@ if (browser == 'Edge') {
 } else console.log('We hope that this page looks ok!');
 
 
-
 // Переписать условия "if" на "switch"
 // Перепишите код с использованием одной конструкции switch:
 
