@@ -243,16 +243,3 @@ console.log('20 ===', checkValue({})); //
 console.log('21 ===', checkValue([])); //
 console.log('22 ===', checkValue(null)); //
 
-// Задача 12: Напишите функцию, которая возвращает первое истинное значение из массива
-function findFirstTruthy(arr) {
-  // Ваш код
-}
-
-// Задача 13: Комбинирование с тернарным оператором
-// const value = null;
-// console.log('25 ===', value && value.length ? value.length : value || 'default');
-
-// Задача 10: Создайте функцию, которая проверяет все аргументы на истинность
-function areAllTruthy(...args) {
-  // Ваш код
-}

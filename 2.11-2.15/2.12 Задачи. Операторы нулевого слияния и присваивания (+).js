@@ -34,7 +34,9 @@ if (result === null || result === undefined) {
 // Создайте функцию getValue, которая принимает два параметра: value1 и value2. Функция должна возвращать value1, если оно не равно null или undefined, в противном случае возвращать value2.
 
 function getValue(value1, value2) {
-  // Ваш код здесь
+  if (value1 != null ?? undefined) {
+    return value1
+  } else return value2
 }
 
 // Примеры вызова функции
@@ -47,7 +49,10 @@ console.log(getValue('Hello', 'default')); // "Hello"
 // Напишите функцию setDefault, которая принимает объект и устанавливает значение по умолчанию для свойства name. Если name отсутствует или равно null, то оно должно быть установлено в "Anonymous".
 
 function setDefault(obj) {
-  // Ваш код здесь
+  if (obj != "" ?? null) { 
+    return obj.name ??= "Anonymous" 
+   }
+  else return obj.name
 }
 
 // Примеры вызова функции
