@@ -1,13 +1,27 @@
-let x = 1;
-function test() {
-    console.log(x);
-    let x = 2;
-}
-test();
-
-
-function createSecret(secret) {
+function counter(num = 0) {
+    let x = num
     return function() {
-        return secret;
+        return x++
+    }
+  }
+  
+  let result = counter(3)
+  console.log(result())
+  console.log(result())
+  console.log(result())
+  console.log(result())
+
+
+
+
+
+  function createSecret(secret) {
+    return function() {
+        return secret++;
     };
-}
+    }
+
+    let result2 = createSecret(2)
+    console.log(result2())
+    console.log(result2())
+    console.log(result2())
