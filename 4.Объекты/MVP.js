@@ -50,104 +50,83 @@ const products = [
   }
 ];
 
-const basketOfGoods = {}
 
-// 1. Вводить/находить нужный товар
+// 1. Проверка товара на наличие и вывод его статуса
+
 function findingItem() {
-  console.log("Доступные товары:");
-  
-  for (let i = 0; i < products.length; i++) {
-    let product = products[i];
-    let status;
-    if (product.inStock === true) {
-      status = "В наличии";
-    } else {
-      status = "Нет в наличии";
-    }
+  console.log('---Весь каталог:')
+  for (item of products) {
+    let productName = item.name
+    let productPrice = item.price
+
+ 
+    if (item.inStock) {
+     console.log(productName + ' Цена: ' + productPrice + ' (В наличии)')
+    } else console.log(productName + ' Цена: ' + productPrice + ' (Нет в наличии)')
+
+  } 
+}
+findingItem(products)
+
+
+// // 2. Добавлять товары в корзину по индексу товара
+let basketOfGoods = []
+let arrayOfPrices = []
+
+function addItem(wantedToBuyId) {
+
+   let foundedItem = null
+   let itemPrice = null
+
+   for (let index = 0; index < products.length; index++) {
+    if (wantedToBuyId === products[index].id) {
+     foundedItem = products[index].name
+
+     basketOfGoods.push(foundedItem)
+
+      //  цена
+      itemPrice = products[index].price
+     arrayOfPrices.push(itemPrice)
     
-    console.log("ID: " + product.id + "; " + product.name + " - $" + product.price + " (" + status + ")");
-  }
-}
 
-// // 2. Добавлять товары и онформацию о нем
-function addItem(productId) {
-
-  let foundProduct = null;
-  for (let i = 0; i < products.length; i++) {
-    if (products[i].id === productId) {
-      foundProduct = products[i];
-      basketOfGoods[productId] = productId;
-      break; 
-    }
-  }
-  
-  console.log("---Выбираем: " + foundProduct.name);
-  return true;
-}
-
-// // 3. Выводить сообщение о покупке
-function purchase() {
-  console.log("---Добавлено в корзину:");
-  
-  let basketKeys = Object.keys(basketOfGoods);
-  let total = 0; 
-  
-  for (let i = 0; i < basketKeys.length; i++) {
-    let productId = basketKeys[i]; 
+     console.log('---Добавлено в корзину: ' + basketOfGoods + "\n")
     
-    let product = null;
-    for (let j = 0; j < products.length; j++) {
-      if (products[j].id === parseInt(productId)) {
-        product = products[j];
-        break; 
-      }
+     break;
+    } 
+   }
+   
+}
+addItem(4)
+addItem(5)
+addItem(1)
+console.log(basketOfGoods)
+
+// 3. Считать общую стоимость
+function calculating() {
+  let totalSum = arrayOfPrices.reduce((a,b) => a + b)
+  console.log('---Итоговая сумма: ' + totalSum + '$')
+  return totalSum
+}
+calculating(arrayOfPrices)
+
+
+ // 4. Удалять коненкретный товар
+function deleteItem(products, basketOfGoods,deletedIndex) {
+
+  let deletedItem
+
+  for (product of products) {
+    if (product.id === deletedIndex) {
+      deletedItem = product.name
     }
 
-    // Подсчет суммы
-    if (product !== null) {
-      let calculating = product.price; 
-      total = total + calculating; 
-      
-      console.log(product.name + " - $" + calculating);
-    }
   }
-  
-  console.log("---Сумма: $" + total);
+
+  basketOfGoods.splice(deletedItem, 1)
+   console.log('---Удалили: ' + deletedItem)
+  console.log(basketOfGoods)
 }
-
-// // 4. Удалять коненкретный товар
-function deleteItem(productId) {
-  if (basketOfGoods[productId]) {
-    const product = products.find(prod => prod.id === productId);
-    console.log(`Удалили: ${product.name}`);
-    delete basketOfGoods[productId];
-    return true;
-  } else return false
-}
-
-
-
-// Проверки
-function demo() {
-  findingItem();
-  addItem(1); // iPhone 13
-  addItem(3); // AirPods Pro
-  addItem(5); // iPad Air
-  
-  purchase();
-
-  deleteItem(3) // Удалили
-  purchase();
-}
-
-demo();
-
-
-
-
-
-
-
+deleteItem(products, basketOfGoods, 5)
 
 
 
