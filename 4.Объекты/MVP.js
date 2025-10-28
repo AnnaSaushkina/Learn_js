@@ -50,7 +50,6 @@ const products = [
   }
 ];
 
-
 // 1. Проверка товара на наличие и вывод его статуса
 
 function findingItem() {
