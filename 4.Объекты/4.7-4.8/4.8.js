@@ -91,3 +91,40 @@ console.log(String(cat)); // "результат"
 console.log(Number(cat)); // 3
 console.log(cat + "!");   // "meow!"
 
+
+
+// Что выведет?
+const a = {
+    value: 1,
+    toString() { return '2'; },
+    valueOf() { return 3; }
+};
+
+const b = {
+    value: 4,
+    [Symbol.toPrimitive](hint) {
+        return hint === 'string' ? '5' : 6;
+    }
+};
+
+console.log(a + b);           //  9
+console.log(`${a} ${b}`);     // 2 5
+console.log(a > b);           // false
+console.log(String(a), String(b)); // '2', '5'
+
+
+// Что выведет?
+const mystery = {
+    value: 100,
+    toString() { return 'сто'; },
+    valueOf() { return 50; },
+    [Symbol.toPrimitive](hint) {
+        if (hint === 'string') return 'тайна';
+        return 25;
+    }
+};
+
+console.log(mystery + 10);      // 35
+console.log(String(mystery));   // "тайна"
+console.log(Number(mystery));   // 25
+
