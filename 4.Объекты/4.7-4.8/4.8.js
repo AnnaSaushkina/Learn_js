@@ -1,3 +1,23 @@
+// Сделай так, чтобы:
+// - При преобразовании в строку: "Температура: X°C"
+// - При преобразовании в число: значение X
+// - При сложении с другим объектом: складывались значения
+
+const temperature = {
+    value: 25,
+    [Symbol.toPrimitive](hint) {
+        return this.value
+    }
+};
+
+// Тесты:
+console.log(String(temperature)); // "Температура: 25°C"
+console.log(Number(temperature)); // 25
+console.log(temperature + 10); // 35
+console.log(temperature + temperature); // 50
+
+
+
 // ### ** Задача A: Калькулятор в объекте **
 
 // Создай объект calculator, который:
@@ -9,10 +29,10 @@
 const calculator = {
     value: 10,
     toString() {
-        return "Значение: " + this.value;
+        return 'значение: ' + this.value
     },
     valueOf() {
-        return this.value;
+        return this.value
     }
 };
 
@@ -20,6 +40,8 @@ console.log(String(calculator)); // "Значение: 10"
 console.log(Number(calculator)); // 10
 console.log(calculator + 5);     // 15
 console.log(`${calculator} `);    // "Значение: 10"
+
+
 
 
 // ### ** Задача B: Объект - перевёртыш **
@@ -32,10 +54,10 @@ const reverser = {
     str: "hello",
     num: 42,
     toString() {
-        return String(this.num);
+        return this.num
     },
     valueOf() {
-        return this.str.length;
+        return this.str.length
     }
 };
 
@@ -43,26 +65,66 @@ console.log(String(reverser)); // "42"
 console.log(Number(reverser)); // 5 (длина "hello")
 
 
+
+
+
 // ### ** Задача C: Использование Symbol.toPrimitive **
 
 // Создай объект с Symbol.toPrimitive, который:
-// - Для 'string': возвращает "🐱"
+// - Для 'string': возвращает "результат"
 // - Для 'number': возвращает 3
 // - Для 'default': возвращает "meow"
 
 const cat = {
     [Symbol.toPrimitive](hint) {
         if (hint === 'string') {
-            return "🐱";
-        } else if (hint === 'number') {
-            return 3;
-        } else {
-            return "meow";
+            return "результат"
         }
+        else if (hint === 'number') {
+            return 3
+        }
+        else return "meow"
     }
 };
 
-console.log(String(cat)); // "🐱"
+console.log(String(cat)); // "результат"
 console.log(Number(cat)); // 3
 console.log(cat + "!");   // "meow!"
+
+
+
+// Что выведет?
+const a = {
+    value: 1,
+    toString() { return '2'; },
+    valueOf() { return 3; }
+};
+
+const b = {
+    value: 4,
+    [Symbol.toPrimitive](hint) {
+        return hint === 'string' ? '5' : 6;
+    }
+};
+
+console.log(a + b);           //  9
+console.log(`${a} ${b}`);     // 2 5
+console.log(a > b);           // false
+console.log(String(a), String(b)); // '2', '5'
+
+
+// Что выведет?
+const mystery = {
+    value: 100,
+    toString() { return 'сто'; },
+    valueOf() { return 50; },
+    [Symbol.toPrimitive](hint) {
+        if (hint === 'string') return 'тайна';
+        return 25;
+    }
+};
+
+console.log(mystery + 10);      // 35
+console.log(String(mystery));   // "тайна"
+console.log(Number(mystery));   // 25
 
