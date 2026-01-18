@@ -8,7 +8,12 @@
 
 const calculator = {
     value: 10,
-    // Дополни код
+    toString() {
+        return "Значение: " + this.value;
+    },
+    valueOf() {
+        return this.value;
+    }
 };
 
 console.log(String(calculator)); // "Значение: 10"
@@ -26,7 +31,12 @@ console.log(`${calculator} `);    // "Значение: 10"
 const reverser = {
     str: "hello",
     num: 42,
-    // Дополни код
+    toString() {
+        return String(this.num);
+    },
+    valueOf() {
+        return this.str.length;
+    }
 };
 
 console.log(String(reverser)); // "42"
@@ -41,7 +51,15 @@ console.log(Number(reverser)); // 5 (длина "hello")
 // - Для 'default': возвращает "meow"
 
 const cat = {
-    // Твой код
+    [Symbol.toPrimitive](hint) {
+        if (hint === 'string') {
+            return "🐱";
+        } else if (hint === 'number') {
+            return 3;
+        } else {
+            return "meow";
+        }
+    }
 };
 
 console.log(String(cat)); // "🐱"
