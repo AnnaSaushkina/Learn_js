@@ -1,204 +1,212 @@
 // forEach
-// Проходит по массиву и вызывает функцию для каждого существующего элемента; ничего не возвращает. 
+// Идёт по массиву и просто запускает функцию для каждого элемента
 
-function forEach(arr, fn, thisArg) {
-  for (let i = 0; i < arr.length; i++) {
-    if (i in arr) fn.call(thisArg, arr[i], i, arr);
+function forEach(array, action, thisArg) {
+  for (let index = 0; index < array.length; index++) {
+    if (index in array) action.call(thisArg, array[index], index, array);
   }
 }
 
 
 // map
-// Создаёт новый массив той же длины и кладёт туда результат функции для каждого элемента.
+// Идёт по массиву и складывает результаты работы функции в новый массив
 
-function map(arr, fn, thisArg) {
-  const res = new Array(arr.length);
-  for (let i = 0; i < arr.length; i++) {
-    if (i in arr) res[i] = fn.call(thisArg, arr[i], i, arr);
+function map(array, transform, thisArg) {
+  const result = new Array(array.length);
+
+  for (let index = 0; index < array.length; index++) {
+    if (index in array) result[index] = transform.call(thisArg, array[index], index, array);
   }
-  return res;
-}
 
+  return result;
+}
 
 // filter
-// Создаёт новый массив и добавляет туда только элементы, для которых функция вернула true 
-const arr = []
-function filter(arr, fn, thisArg) {
-  const res = [];
-  for (let i = 0; i < arr.length; i++) {
-    if (i in arr) {
-      const result = arr[i];
-      if (fn.call(thisArg, result, i, arr)) res.push(result);
-    }
+// Идёт по массиву и складывает в новый массив только то, что прошло проверку
+function filter(array, check, thisArg) {
+  const result = [];
+
+  for (let index = 0; index < array.length; index++) {
+    if (!(index in array)) continue;
+
+    const value = array[index];
+    if (check.call(thisArg, value, index, array)) result.push(value);
   }
-  return res;
+
+  return result;
 }
 
-
 // reduce
-// Сворачивает массив в одно значение: аккумулятор обновляется на каждом элементе. Если стартовое значение не передали и массив пустой — будет ошибка. 
+// Собирает массив в одно значение (например, сумма всех чисел). Если стартовое значение не дали и массив пустой будет ошибка
 
-function reduce(arr, fn, initialValue) {
-  let i = 0;
-  let acc;
+function reduce(array, combine, startValue) {
+  let index = 0;
+  let total;
 
   if (arguments.length >= 3) {
-    acc = initialValue;
+    total = startValue;
   } else {
-    while (i < arr.length && !(i in arr)) i++;
-    if (i >= arr.length) throw new TypeError("Reduce of empty array with no initial value");
-    acc = arr[i];
-    i++;
+    while (index < array.length && !(index in array)) index++;
+    if (index >= array.length) throw new TypeError("Нельзя reduce для пустого массива без стартового значения");
+    total = array[index];
+    index++;
   }
 
-  for (; i < arr.length; i++) {
-    if (i in arr) acc = fn(acc, arr[i], i, arr);
+  for (; index < array.length; index++) {
+    if (index in array) total = combine(total, array[index], index, array);
   }
-  return acc;
+
+  return total;
 }
 
 
 // find и findIndex
-// возвращает первый элемент, который подходит; findIndex его индекс (или -1 если не нашли).
+// find ищет первый подходящий элемент, а findIndex  его индекс; если не нашли, find вернёт undefined
 
-function find(arr, predicate, thisArg) {
-  for (let i = 0; i < arr.length; i++) {
-    if (i in arr && predicate.call(thisArg, arr[i], i, arr)) return arr[i];
+function find(array, check, thisArg) {
+  for (let index = 0; index < array.length; index++) {
+    if (index in array && check.call(thisArg, array[index], index, array)) return array[index];
   }
   return undefined;
 }
 
-function findIndex(arr, predicate, thisArg) {
-  for (let i = 0; i < arr.length; i++) {
-    if (i in arr && predicate.call(thisArg, arr[i], i, arr)) return i;
+function findIndex(array, check, thisArg) {
+  for (let index = 0; index < array.length; index++) {
+    if (index in array && check.call(thisArg, array[index], index, array)) return index;
   }
   return -1;
 }
 
 
 // some и every
-// some есть ли хотя бы один подходящий элемент; everyподходят ли все. 
+// some: подходит хотя бы один? every: подходят все?
 
-function some(arr, predicate, thisArg) {
-  for (let i = 0; i < arr.length; i++) {
-    if (i in arr && predicate.call(thisArg, arr[i], i, arr)) return true;
+function some(array, check, thisArg) {
+  for (let index = 0; index < array.length; index++) {
+    if (index in array && check.call(thisArg, array[index], index, array)) return true;
   }
   return false;
 }
 
-function every(arr, predicate, thisArg) {
-  for (let i = 0; i < arr.length; i++) {
-    if (i in arr && !predicate.call(thisArg, arr[i], i, arr)) return false;
+function every(array, check, thisArg) {
+  for (let index = 0; index < array.length; index++) {
+    if (index in array && !check.call(thisArg, array[index], index, array)) return false;
   }
   return true;
 }
 
-
 // includes (и SameValueZero)
-// includes проверяет, есть ли значение в массиве; особенность NaN тоже находится
+// includes проверяет, есть ли такое значение в массиве; NaN тоже считается нашлось.
 
 function sameValueZero(a, b) {
   return a === b || (Number.isNaN(a) && Number.isNaN(b));
 }
 
-function includes(arr, search, fromIndex = 0) {
-  const len = arr.length >>> 0;
-  let i = fromIndex >= 0 ? fromIndex : Math.max(len + fromIndex, 0);
+function includes(array, wanted, fromIndex = 0) {
+  const length = array.length >>> 0;
+  let index = fromIndex >= 0 ? fromIndex : Math.max(length + fromIndex, 0);
 
-  for (; i < len; i++) {
-    const v = (i in arr) ? arr[i] : undefined;
-    if (sameValueZero(v, search)) return true;
+  for (; index < length; index++) {
+    const value = (index in array) ? array[index] : undefined;
+    if (sameValueZero(value, wanted)) return true;
   }
+
   return false;
 }
 
 
 // slice
-// Возвращает новый массив копию части исходного (исходный массив не меняет). 
+// Возвращает новый массив: кусочек исходного 
 
-function slice(arr, start = 0, end = arr.length) {
-  const len = arr.length >>> 0;
+function slice(array, from = 0, to = array.length) {
+  const length = array.length >>> 0;
 
-  let s = start < 0 ? Math.max(len + start, 0) : Math.min(start, len);
-  let e = end < 0 ? Math.max(len + end, 0) : Math.min(end, len);
+  const start = from < 0 ? Math.max(length + from, 0) : Math.min(from, length);
+  const end = to < 0 ? Math.max(length + to, 0) : Math.min(to, length);
 
-  const res = [];
-  for (let i = s; i < e; i++) res.push((i in arr) ? arr[i] : undefined);
-  return res;
+  const result = [];
+  for (let index = start; index < end; index++) {
+    result.push((index in array) ? array[index] : undefined);
+  }
+
+  return result;
 }
 
 
 // splice 
-// Удаляет часть массива и  вставляет новые элементы; меняет исходный массив и возвращает удалённые элементы. 
+// Удаляет кусок массива и (если надо) вставляет новые элементы; сам массив меняется.
 
-function splice(arr, start, deleteCount, ...items) {
-  const removed = arr.slice(start, start + deleteCount);
-  const head = arr.slice(0, start);
-  const tail = arr.slice(start + deleteCount);
+function splice(array, start, deleteCount, ...items) {
+  const removed = array.slice(start, start + deleteCount);
+  const left = array.slice(0, start);
+  const right = array.slice(start + deleteCount);
 
-  const next = head.concat(items, tail);
+  const next = left.concat(items, right);
 
-  arr.length = 0;
-  for (const x of next) arr.push(x);
+  array.length = 0;
+  for (const value of next) array.push(value);
 
   return removed;
 }
 
-
 // join
-// Склеивает элементы массива в строку через разделитель. 
+// Склеивает элементы массива в одну строку. 
 
-function join(arr, sep = ",") {
-  if (arr.length === 0) return "";
+function join(array, separator = ",") {
+  if (array.length === 0) return "";
 
-  let out = "";
-  for (let i = 0; i < arr.length; i++) {
-    if (i > 0) out += String(sep);
-    const v = (i in arr) ? arr[i] : undefined;
-    out += v == null ? "" : String(v);
+  let text = "";
+  for (let index = 0; index < array.length; index++) {
+    if (index > 0) text += String(separator);
+    const value = (index in array) ? array[index] : undefined;
+    text += value == null ? "" : String(value);
   }
-  return out;
+
+  return text;
 }
 
 
 // sort 
-// Сортирует массив; без функции сравнения сравнивает как строки. 
+// Сортирует массив на месте; если не дать сравнение  сортирует как строки 
 
-function sort(arr, compareFn) {
-  const cmp = compareFn ?? ((a, b) => String(a).localeCompare(String(b)));
+function sort(array, compare) {
+  const compareValues = compare ?? ((a, b) => String(a).localeCompare(String(b)));
 
-  for (let i = 0; i < arr.length - 1; i++) {
-    for (let j = 0; j < arr.length - 1 - i; j++) {
-      if (cmp(arr[j], arr[j + 1]) > 0) {
-        const t = arr[j];
-        arr[j] = arr[j + 1];
-        arr[j + 1] = t;
+  for (let pass = 0; pass < array.length - 1; pass++) {
+    for (let index = 0; index < array.length - 1 - pass; index++) {
+      if (compareValues(array[index], array[index + 1]) > 0) {
+        const temp = array[index];
+        array[index] = array[index + 1];
+        array[index + 1] = temp;
       }
     }
   }
-  return arr;
+
+  return array;
 }
 
 
 // reverse
 // Разворачивает массив 
 
-function reverse(arr) {
-  let l = 0;
-  let r = arr.length - 1;
+function reverse(array) {
+  let left = 0;
+  let right = array.length - 1;
 
-  while (l < r) {
-    const lHas = l in arr;
-    const rHas = r in arr;
-    const lv = arr[l];
-    const rv = arr[r];
+  while (left < right) {
+    const leftExists = left in array;
+    const rightExists = right in array;
 
-    if (rHas) arr[l] = rv; else delete arr[l];
-    if (lHas) arr[r] = lv; else delete arr[r];
+    const leftValue = array[left];
+    const rightValue = array[right];
 
-    l++;
-    r--;
+    if (rightExists) array[left] = rightValue; else delete array[left];
+    if (leftExists) array[right] = leftValue; else delete array[right];
+
+    left++;
+    right--;
   }
-  return arr;
+
+  return array;
 }
 
