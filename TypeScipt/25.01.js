@@ -13,11 +13,11 @@
       console.log(myMap(numbers, el => el * 2)); 
 
   
-    // -------------- forEach 
+    // -------------- forEach  
     function myForEach(array, callbackFunc) {
       for (let index = 0; index < array.length; index++) {
         callbackFunc(array[index]);
-      }
+      }   
     }
     
     myForEach(numbers, (value) => console.log(value));
