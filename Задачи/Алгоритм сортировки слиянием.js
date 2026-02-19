@@ -1,73 +1,69 @@
 // Задача: написать алгоритм сортировки слиянием
-// Функция принимает два отсортированных по возрастанию массива чисел: left и right.
-// Возвращает новый массив, в котором все элементы из left и right собраны вместе и тоже отсортированы по возрастанию.
 
-function merge(left, right) {
-  let result = [];
+const myArray = [3, 5, 7, 2, 5, 0, 10, 4, 1];
 
-  // Сначала разбирала движение элементов через индексы и несколько while циклов
-  //   let i = 0;
-  //   let j = 0;
-
-  //   while (i < left.length && j < right.length) {
-  //     if (left[i] < right[j]) {
-  //       result.push(left[i]);
-  //       i++;
-  //     } else {
-  //       result.push(right[j]);
-  //       j++;
-  //     }
-  //   }
-  //   while (i < left.length) {
-  //     result.push(left[i]);
-  //     i++;
-  //   }
-
-  //   while (j < right.length) {
-  //     result.push(right[j]);
-  //     j++;
-  //   }
-
-  // После разработки работающего алгоритма решила написать на более читабельную версию через shift
-  while (left.length && right.length) {
-    if (left[0] < right[0]) {
-      result.push(left.shift());
-    } else result.push(right.shift());
+function mergeSort(array, start, end, temp) {
+  // отрезок длиной 0 или 1
+  if (end - start <= 1) {
+    return;
   }
 
-  return result.concat(left, right);
+  // находим середину отрезка
+  const mid = Math.floor((start + end) / 2);
+
+  // рекурсивно сортируем левую и правую половины
+  mergeSort(array, start, mid, temp);
+  mergeSort(array, mid, end, temp);
+
+  // сливаем две отсортированные половины а потом копируем результат обратно в исходный массив
+  merge(array, start, mid, end, temp);
 }
 
-function mergeSort(array) {
-  // случай массива из одного элемента
-  if (array.length === 0 || array.length === 1) {
-    return array;
+function merge(array, start, mid, end, temp) {
+  let i = start; // указатель по левой половине
+  let j = mid; // указатель по правой половине
+  let k = start; // указатель позиции в temp, куда пишем результат
+
+  // сливаем пока в обеих половинах еще есть элементы
+  while (i < mid && j < end) {
+    if (array[i] <= array[j]) {
+      temp[k] = array[i];
+      i++;
+    } else {
+      temp[k] = array[j];
+      j++;
+    }
+    k++;
   }
 
-  // разделение пополам
-  let arrayCenter = Math.floor(array.length / 2);
-  let leftHalf = array.slice(0, arrayCenter);
-  let rightHalf = array.slice(arrayCenter);
+  // если в левой половине остались элементы докидываем их
+  while (i < mid) {
+    temp[k] = array[i];
+    i++;
+    k++;
+  }
 
-  // рекурсивное деление каждой половины
-  let sorted1 = mergeSort(leftHalf);
-  let sorted2 = mergeSort(rightHalf);
+  // если в правой половине остались элементы докидываем их
+  while (j < end) {
+    temp[k] = array[j];
+    j++;
+    k++;
+  }
 
-  // слияние двух разделенных половин
-  return merge(sorted1, sorted2);
+  // копируем отсортированный отрезок обратно в исходный массив
+  for (let idx = start; idx < end; idx++) {
+    array[idx] = temp[idx];
+  }
 }
 
-// Ожидаемое поведение:
-console.log(mergeSort([1, 3, 5, 2, 4, 6])); // [1, 2, 3, 4, 5, 6]
+function mergeSortWrapper(array) {
+  const temp = new Array(array.length); // один вспомогательный массив на все время работы
+  mergeSort(array, 0, array.length, temp);
+  return array;
+}
 
-console.log(mergeSort([5, 1, 9, 2])); //[1, 2, 5, 9]
-
-console.log(mergeSort([])); // []
-
-console.log(mergeSort([7])); // [7]
-
-// Итого: берем массив, делим его на две части,
-// к каждой половине, которая рекурсивно будет разделяться - применяем функцию слияния.
-// проходимся по каждой половине, сравниваем первое число у каждого.
-// если число меньше числа другого массива - удаляем его из исходной половины и добавляем в качестве первого числа нового массива.
-// числа сравниваются и падают от меньшего к большему в новый массив пока две половины массивов не закончатся.
+// тест
+console.log(mergeSortWrapper([1, 3, 5, 2, 4, 6])); // [1, 2, 3, 4, 5, 6]
+console.log(mergeSortWrapper([5, 1, 9, 2])); // [1, 2, 5, 9]
+console.log(mergeSortWrapper([])); // []
+console.log(mergeSortWrapper([7])); // [7]
