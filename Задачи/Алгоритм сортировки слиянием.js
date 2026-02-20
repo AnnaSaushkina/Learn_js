@@ -2,63 +2,62 @@
 
 const myArray = [3, 5, 7, 2, 5, 0, 10, 4, 1];
 
-function mergeSort(array, start, end, temp) {
+function mergeSort(array, start, end, result) {
   // отрезок длиной 0 или 1
   if (end - start <= 1) {
     return;
   }
 
-  // находим середину отрезка
-  const mid = Math.floor((start + end) / 2);
+  const middle = Math.floor((start + end) / 2);
 
   // рекурсивно сортируем левую и правую половины
-  mergeSort(array, start, mid, temp);
-  mergeSort(array, mid, end, temp);
+  mergeSort(array, start, middle, result);
+  mergeSort(array, middle, end, result);
 
   // сливаем две отсортированные половины а потом копируем результат обратно в исходный массив
-  merge(array, start, mid, end, temp);
+  merge(array, start, middle, end, result);
 }
 
-function merge(array, start, mid, end, temp) {
-  let i = start; // указатель по левой половине
-  let j = mid; // указатель по правой половине
-  let k = start; // указатель позиции в temp, куда пишем результат
+function merge(array, start, middle, end, result) {
+  let i = start; // левая половина
+  let j = middle; // правая половина
+  let k = start;
 
   // сливаем пока в обеих половинах еще есть элементы
-  while (i < mid && j < end) {
+  while (i < middle && j < end) {
     if (array[i] <= array[j]) {
-      temp[k] = array[i];
+      result[k] = array[i];
       i++;
     } else {
-      temp[k] = array[j];
+      result[k] = array[j];
       j++;
     }
     k++;
   }
 
   // если в левой половине остались элементы докидываем их
-  while (i < mid) {
-    temp[k] = array[i];
+  while (i < middle) {
+    result[k] = array[i];
     i++;
     k++;
   }
 
   // если в правой половине остались элементы докидываем их
   while (j < end) {
-    temp[k] = array[j];
+    result[k] = array[j];
     j++;
     k++;
   }
 
   // копируем отсортированный отрезок обратно в исходный массив
-  for (let idx = start; idx < end; idx++) {
-    array[idx] = temp[idx];
+  for (let index = start; index < end; index++) {
+    array[index] = result[index];
   }
 }
 
 function mergeSortWrapper(array) {
-  const temp = new Array(array.length); // один вспомогательный массив на все время работы
-  mergeSort(array, 0, array.length, temp);
+  const result = new Array(array.length);
+  mergeSort(array, 0, array.length, result);
   return array;
 }
 
