@@ -1,39 +1,78 @@
-// ============================================================
-// 1. VAR
-// ============================================================
-// - var не имеет блочной области видимости (только функциональная)
-// - var допускает повторное объявление
-// - var "всплывает" (hoisting) в начало функции — объявление, но не значение
-// - IIFE — паттерн для эмуляции блочной видимости в старом коде: (function(){})()
+// 6.2 REST И SPREAD
 
-// Задача: что выведет этот код и почему?
-function task1() {
-  console.log(phrase); // ?
-  var phrase = 'Привет';
-  console.log(phrase); // ?
+function sumAll(...args) {
+  let sum = 0;
+  for (let arg of args) sum += arg;
+  return sum;
 }
-task1();
+console.log(sumAll(1)); // 1
+console.log(sumAll(1, 2)); // 3
+console.log(sumAll(1, 2, 3)); // 6
 
-// Задача: что выведет?
-for (var i = 0; i < 3; i++) {}
-console.log(i); // ?
+function showName(firstName, lastName, ...titles) {
+  console.log(firstName + ' ' + lastName); // Юлий Цезарь
+  console.log(titles[0]); // Консул
+  console.log(titles[1]); // Император
+  console.log(titles.length); // 2
+}
+showName('Юлий', 'Цезарь', 'Консул', 'Император');
 
-// Задача: что выведет?
+let arr = [3, 5, 1];
+console.log(Math.max(...arr)); // 5
+
+let arr1 = [1, -2, 3, 4];
+let arr2 = [8, 3, -8, 1];
+let merged = [0, ...arr1, 2, ...arr2];
+console.log(merged); // [0, 1, -2, 3, 4, 2, 8, 3, -8, 1]
+
+let str = 'Привет';
+console.log([...str]); // ['П','р','и','в','е','т']
+
+// 6.4 VAR
+// var не видит блок if, видна снаружи
 if (true) {
   var test = true;
 }
-console.log(test); // ?
+console.log(test); // true
 
-// ============================================================
-// 2. ОБЪЕКТ ФУНКЦИИ, NFE
-// ============================================================
-// - Функция — это объект
-// - func.name — имя функции
-// - func.length — количество параметров (rest не считается)
-// - Можно добавлять свои свойства: func.counter = 0
-// - NFE (Named Function Expression) — имя доступно только внутри функции
+// let, видит только свой блок
+if (true) {
+  let phrase = 'Привет';
+}
+// console.log(phrase); // ошибка
 
-// Задача: доработай makeCounter — добавь методы set и decrease
+// var видна снаружи цикла
+for (var i = 0; i < 3; i++) {}
+console.log(i); // 3
+
+// hoisting: объявление var всплывает наверх функции, но не значение
+function task() {
+  console.log(phrase); // undefined
+  var phrase = 'Привет';
+  console.log(phrase); // Привет
+}
+task();
+
+//  старый способ изолировать переменные
+(function () {
+  var local = 'недоступна снаружи';
+  console.log(local);
+})();
+// console.log(local); // ошибка
+
+// 6.5 ГЛОБАЛЬНЫЙ ОБЪЕКТ
+
+var gVar = 5;
+// console.log(window.gVar); // 5
+
+let gLet = 5;
+// console.log(window.gLet); // undefined
+
+console.log(globalThis); // работает и в браузере и в Node.js
+
+// 6.6 ОБЪЕКТ ФУНКЦИИ, NFE
+
+// Задача 1: makeCounter с методами set и decrease
 function makeCounter() {
   let count = 0;
 
@@ -41,8 +80,8 @@ function makeCounter() {
     return count++;
   }
 
-  // TODO: добавь counter.set(value) — устанавливает значение
-  // TODO: добавь counter.decrease() — уменьшает на 1
+  counter.set = (value) => (count = value);
+  counter.decrease = () => count--;
 
   return counter;
 }
@@ -50,137 +89,78 @@ function makeCounter() {
 const counter = makeCounter();
 console.log(counter()); // 0
 console.log(counter()); // 1
-// counter.set(10);
-// console.log(counter()); // 10
-// counter.decrease();
-// console.log(counter()); // 10 (уменьшился до 10, потом увеличился)
+counter.set(10);
+console.log(counter()); // 10
+counter.decrease();
+console.log(counter()); // 10
 
-// Задача: напиши функцию sum с произвольным количеством скобок
-// sum(1)(2) == 3
-// sum(1)(2)(3) == 6
-// sum(5)(-1)(2) == 6
+// Задача 2: sum с любым количеством скобок
+// toString вызывается автоматически при сравнении
 function sum(a) {
-  // TODO
+  let currentSum = a;
+
+  function f(b) {
+    currentSum += b;
+    return f;
+  }
+
+  f.toString = function () {
+    return currentSum;
+  };
+
+  return f;
 }
-// console.log(sum(1)(2) == 3); // true
-// console.log(sum(1)(2)(3) == 6); // true
 
-// ============================================================
-// 3. SETTIMEOUT / SETINTERVAL
-// ============================================================
-// - setTimeout(func, delay) — вызвать один раз через delay мс
-// - setInterval(func, delay) — вызывать каждые delay мс
-// - clearTimeout(id) / clearInterval(id) — отмена
-// - setTimeout(func, 0) — выполнить после текущего кода
-// - Вложенный setTimeout точнее setInterval по задержке
-// - НЕ передавай func() со скобками — передавай ссылку func
+console.log(sum(1)(2) == 3); // true
+console.log(sum(1)(2)(3) == 6); // true
+console.log(sum(5)(-1)(2) == 6); // true
+console.log(sum(6)(-1)(-2)(-3) == 0); // true
+console.log(sum(0)(1)(2)(3)(4)(5) == 15); // true
 
-// Задача: что выведет код?
+// 6.7 NEW FUNCTION
+
+let func = new Function('a', 'b', 'return a + b');
+console.log(func(1, 2)); // 3
+
+function getFunc() {
+  let value = 'тест';
+  let func = new Function('alert(value)');
+  return func;
+}
+// getFunc()(); // ошибка
+
+// 6.8 SETTIMEOUT И SETINTERVAL
+
+// Задача 1: setTimeout выполнится только после цикла
 let i = 0;
-setTimeout(() => console.log('setTimeout i =', i), 0);
-for (let j = 0; j < 1000000; j++) {
+setTimeout(() => console.log(i), 100);
+for (let j = 0; j < 100000000; j++) {
   i++;
 }
-console.log('sync i =', i);
+// 100000000
 
-// Задача: напиши printNumbers(from, to) двумя способами
-// Вариант 1 — через setInterval
+// Задача 2: printNumbers, выводить числа раз в секунду
+
+// через setInterval
 function printNumbersInterval(from, to) {
-  // TODO
+  let current = from;
+  let timerId = setInterval(function () {
+    console.log(current);
+    if (current === to) clearInterval(timerId);
+    current++;
+  }, 1000);
 }
 
-// Вариант 2 — через рекурсивный setTimeout
+// через рекурсивный setTimeout
 function printNumbersTimeout(from, to) {
-  // TODO
+  let current = from;
+
+  setTimeout(function go() {
+    console.log(current);
+    if (current < to) setTimeout(go, 1000);
+    current++;
+  }, 1000);
 }
 
 // printNumbersInterval(1, 5);
 // printNumbersTimeout(1, 5);
-
-// ============================================================
-// 4. REST ПАРАМЕТРЫ И SPREAD ОПЕРАТОР
-// ============================================================
-// - ...rest в параметрах функции — собирает остаток в массив
-// - ...spread при вызове — разворачивает массив в аргументы
-// - rest должен быть последним параметром
-// - arguments — псевдомассив, устарел, нет в стрелочных функциях
-// - Array.from работает и с псевдомассивами, spread — только с итерируемыми
-
-// Задача: напиши функцию sumAll которая принимает любое кол-во чисел
-function sumAll(...args) {
-  // TODO
-}
-// console.log(sumAll(1, 2, 3)); // 6
-// console.log(sumAll(1, 2, 3, 4, 5)); // 15
-
-// Задача: найди максимум в массиве через spread
-const arr = [3, 1, 7, 2, 9, 4];
-// const max = ? // используй Math.max и spread
-// console.log(max); // 9
-
-// Задача: объедини два массива через spread
-const arr1 = [1, 2, 3];
-const arr2 = [4, 5, 6];
-// const merged = ? // без concat, через spread
-// console.log(merged); // [1, 2, 3, 4, 5, 6]
-
-// ============================================================
-// 5. СТРЕЛОЧНЫЕ ФУНКЦИИ
-// ============================================================
-// - Нет своего this — берёт из внешнего контекста
-// - Нет arguments
-// - Нельзя использовать с new
-// - Нет super
-// - Подходят для коллбэков где нужен внешний this
-
-// Задача: что выведет?
-const group = {
-  title: 'Группа',
-  students: ['Аня', 'Паша'],
-  showList() {
-    this.students.forEach((student) => {
-      console.log(this.title + ': ' + student); // ?
-    });
-  },
-};
-group.showList();
-
-// Задача: что выведет и почему?
-const group2 = {
-  title: 'Группа 2',
-  students: ['Аня', 'Паша'],
-  showList() {
-    this.students.forEach(function (student) {
-      console.log(this.title + ': ' + student); // ?
-    });
-  },
-};
-// group2.showList(); // раскомментируй и объясни ошибку
-
-// ============================================================
-// БОНУС: задача из нашего Task Board
-// ============================================================
-const tasks = [
-  { id: '1', title: 'Починить баг', assignee: 'Аня', priority: 'high' },
-  { id: '2', title: 'Написать тесты', assignee: 'Паша', priority: 'low' },
-  { id: '3', title: 'Ревью PR', assignee: 'Аня', priority: 'medium' },
-  { id: '4', title: 'Деплой', assignee: 'Олег', priority: 'high' },
-  { id: '5', title: 'Документация', assignee: 'Паша', priority: 'low' },
-];
-
-// Задача 1: сгруппируй задачи по исполнителю через Map
-function groupByAssignee(tasks) {
-  // TODO
-}
-// console.log(groupByAssignee(tasks));
-
-// Задача 2: получи уникальных исполнителей через Set
-// const uniqueAssignees = ?
-// console.log(uniqueAssignees); // ["Аня", "Паша", "Олег"]
-
-// Задача 3: найди все задачи с high приоритетом через filter + rest
-function getHighPriority(tasks, ...priorities) {
-  // TODO — верни задачи у которых priority входит в ...priorities
-}
-// console.log(getHighPriority(tasks, "high")); // 2 задачи
-// console.log(getHighPriority(tasks, "high", "medium")); // 3 задачи
