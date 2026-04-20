@@ -1,80 +1,61 @@
-//  ЗАДАЧА 1. Что выведет код?
-
+// ЗАДАЧА 1
 let animal = { jumps: null };
 let rabbit = { __proto__: animal, jumps: true };
 
-console.log(rabbit.jumps); // ? → напиши ответ
+console.log(rabbit.jumps); // true есть в самом rabbit
 delete rabbit.jumps;
-console.log(rabbit.jumps); // ? → напиши ответ
+console.log(rabbit.jumps); // null берется из animal
 delete animal.jumps;
-console.log(rabbit.jumps); // ? → напиши ответ
+console.log(rabbit.jumps); // undefined нигде нет
 
-// ЗАДАЧА 2. Выстрой цепочку прототипов
-
+// ЗАДАЧА 2
 let head = { glasses: 1 };
-let table = { pen: 3 };
-let bed = { sheet: 1, pillow: 2 };
-let pockets = { money: 2000 };
+let table = { pen: 3, __proto__: head };
+let bed = { sheet: 1, pillow: 2, __proto__: table };
+let pockets = { money: 2000, __proto__: bed };
 
-// TODO: расставь __proto__ чтобы цепочка работала
-// ...
+console.log(pockets.pen); // 3
+console.log(bed.glasses); // 1
 
-console.log(pockets.pen); // должно быть 3
-console.log(bed.glasses); // должно быть 1
-
-// Вопрос: pockets.glasses или head.glasses — что быстрее?
-
-// ЗАДАЧА 3. Куда запишется свойство?
+// ЗАДАЧА 3
 let animal2 = {
   eat() {
     this.full = true;
   },
 };
-
 let rabbit2 = { __proto__: animal2 };
-
 rabbit2.eat();
 
-// TODO: раскомментируй и проверь — где появилось свойство full?
-// console.log(rabbit2.full);  // ?
-// console.log(animal2.full);  // ?
+console.log(rabbit2.full); // true свойство записалось в rabbit2
+console.log(animal2.full); // undefined animal2 остается
 
-// ЗАДАЧА 4. Почему наедаются оба хомяка? Исправь.
-
+// ЗАДАЧА 4
 let hamster = {
-  stomach: [],
   eat(food) {
-    this.stomach.push(food); // <-- проблема здесь
+    this.stomach = this.stomach ? [...this.stomach, food] : [food];
   },
 };
-
 let speedy = { __proto__: hamster };
 let lazy = { __proto__: hamster };
 
 speedy.eat('apple');
-console.log(speedy.stomach); // ["apple"]
-console.log(lazy.stomach); // ["apple"] ← BUG: не должно быть!
+console.log(speedy.stomach); // ['apple']
+console.log(lazy.stomach); // undefined у lazy свой желудок не создавался
 
-// TODO: исправь hamster.eat так, чтобы желудки были раздельными
-
-// ЗАДАЧА 5*. Геттер + флаги
-// Создай объект user с полями name и birthday (Date).
-// Добавь геттер age, который считает возраст автоматически.
-// Сделай birthday неизменяемым (writable: false).
-
+// ЗАДАЧА 5
 function User(name, birthday) {
   this.name = name;
 
-  // TODO: сохрани birthday как writable: false
   Object.defineProperty(this, 'birthday', {
     value: birthday,
-    // ...допиши флаги
+    writable: false,
+    enumerable: true,
+    configurable: false,
   });
 
-  // TODO: добавь геттер age
   Object.defineProperty(this, 'age', {
     get() {
-      // возраст = текущий год - год рождения
+      return new Date().getFullYear() - this.birthday.getFullYear();
     },
     enumerable: true,
     configurable: false,
@@ -82,7 +63,7 @@ function User(name, birthday) {
 }
 
 const john = new User('John', new Date(1992, 6, 1));
-console.log(john.age);
-console.log(john.birthday);
-john.birthday = new Date();
-console.log(john.birthday);
+console.log(john.age); // 33
+console.log(john.birthday); // 1992-07-01
+john.birthday = new Date(); // writable false
+console.log(john.birthday); // все еще 1992-07-01
