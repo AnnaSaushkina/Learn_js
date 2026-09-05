@@ -1,5 +1,4 @@
-// Задача к встрече: построить дерево из плоского списка.
-// Дан плоский список категорий с parentId (null — корень).
+// Дерево из плоского списка. parentId === null — корень.
 
 const categories = [
   { id: 1, name: 'Электроника', parentId: null },
@@ -9,7 +8,6 @@ const categories = [
   { id: 5, name: 'Мужская', parentId: 4 },
 ];
 
-// Нужно: у каждого узла появляется поле children — массив его детей.
 // Ожидается:
 // [
 //   { id: 1, name: 'Электроника', parentId: null, children: [
@@ -21,8 +19,6 @@ const categories = [
 //   ]},
 // ]
 
-function buildTree(list) {
-  // не решала
-}
+function buildTree(list) {}
 
 console.log(JSON.stringify(buildTree(categories), null, 2));
